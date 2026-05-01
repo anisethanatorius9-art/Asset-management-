@@ -1,0 +1,11 @@
+--- a/src/Illuminate/Database/DatabaseServiceProvider.php
++++ b/src/Illuminate/Database/DatabaseServiceProvider.php
+@@ -40,7 +40,7 @@ class DatabaseServiceProvider extends ServiceProvider
+      */
+     public function register()
+     {
+-        Model::clearBootedModels();
++        // Model::clearBootedModels();
+
+         $this->registerConnectionServices();
+         $this->registerFakerGenerator();

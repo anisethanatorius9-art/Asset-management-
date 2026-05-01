@@ -1,0 +1,22 @@
+services:
+  - type: web_service
+    name: ams-app
+    env: php
+    branch: main
+    buildCommand: |
+      composer config http-basic.composer.fluxui.dev "${FLUX_USERNAME}" "${FLUX_LICENSE_KEY}"
+      composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+      npm ci
+      npm run build
+      if [ ! -f .env ]; then cp .env.example .env; fi
+      php artisan key:generate --force
+    startCommand: php artisan serve --host=0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        value: https://your-app.onrender.com
+      - key: VITE_APP_NAME
+        value: "AMS"
